@@ -107,24 +107,24 @@ struct ExpressionAST
     virtual ~ExpressionAST() {}
 };
 
-struct NumberExpressionAST : public ExprAST
+struct NumberExpressionAST : public ExpressionAST
 {
     int value;
     NumberExpressionAST(int v) : value(v) {}
 };
 
-struct VariableExpressionAST : public ExprAST
+struct VariableExpressionAST : public ExpressionAST
 {
     string name;
     VariableExpressionAST(const string &n) : name(n) {}
 };
 
-struct BinaryExpressionAST : public ExprAST
+struct BinaryExpressionAST : public ExpressionAST
 {
     char op;
     ExpressionAST *lhs;
     ExpressionAST *rhs;
-    BinaryExpressionAST(char op, ExprAST *lhs, ExprAST *rhs) : op(op), lhs(lhs), rhs(rhs) {}
+    BinaryExpressionAST(char op, ExpressionAST *lhs, ExpressionAST *rhs) : op(op), lhs(lhs), rhs(rhs) {}
 };
 
 struct StatementAST
@@ -434,12 +434,13 @@ int main()
 
     Parser parser;
     vector<StatementAST *> statements = parser.parseProgram();
-	
+
     CodeGen codegen;
     codegen.genProgram(statements);
 
-    for (auto s : statements) {
-    	delete s;
+    for (auto s : statements)
+    {
+        delete s;
     }
 
     return 0;
