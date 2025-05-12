@@ -27,28 +27,7 @@ install: $(TARGET)
 	sudo cp $(TARGET) /usr/local/bin/
 	@echo "Nova compiler installed successfully!"
 
-install-completion:
-	@echo "Installing shell completion..."
-	@if [ "$$SHELL" = "/bin/zsh" ] || [ "$$SHELL" = "/usr/bin/zsh" ]; then \
-		echo "Installing zsh completion..."; \
-		sudo mkdir -p /usr/local/share/zsh/site-functions; \
-		sudo cp completions/_nova /usr/local/share/zsh/site-functions/_nova; \
-		echo "Zsh completion installed! Restart your shell."; \
-	else \
-		echo "Installing bash completion..."; \
-		if [ -d /etc/bash_completion.d ]; then \
-			sudo cp completions/nova-completion.sh /etc/bash_completion.d/nova; \
-			echo "Bash completion installed to /etc/bash_completion.d/"; \
-		else \
-			mkdir -p $$HOME/.nova; \
-			cp completions/nova-completion.sh $$HOME/.nova/; \
-			echo "Bash completion installed to $$HOME/.nova/"; \
-			echo "Add this line to your .bashrc:"; \
-			echo "source $$HOME/.nova/nova-completion.sh"; \
-		fi \
-	fi
-
-install-all: install install-completion install-vscode
+install-all: install install-vscode
 
 install-vscode:
 	@echo "Installing VS Code extension..."
